@@ -1,3 +1,13 @@
 body {
     background-color: gray;
+    margin: 30px;
+}
+
+#results div{
+    margin: 15px;
+}
+
+button {
+
+    width: 100%;
 }

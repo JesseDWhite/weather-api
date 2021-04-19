@@ -25,8 +25,11 @@ $(document).ready(function () {
         function getElements(response) {
             $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
             $('.showTemp').text(`The temperature is ${Math.floor(response.main.temp)} degrees Fahrenheit.`);
+            $('.showDescription').text(`${Date(response.dt)}`);
             $('.showLat').text(`Lat: ${response.coord.lat}.`);
             $('.showLong').text(`Long: ${response.coord.lon}.`);
+            $('.showWendSpeed').text(`Wind Speed: ${response.wind.speed}.`);
+            $('.showClouds').text(`Clouds: ${response.clouds.all}%.`);
         }
     });
 });

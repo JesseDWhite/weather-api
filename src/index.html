@@ -10,15 +10,20 @@
 
 <body>
     <div class="container">
-        <h1>Get Weather Conditions From Anywhere!</h1>
+        <h1>Get Weather Conditions From Anywhere!🌦</h1>
         <label for="location">Enter a location:</label>
-        <input id="location" type="text">
-        <button class="btn btn-warning" id="weatherLocation">Get Current Temperature and Humidity</button>
-        <div class="showErrors"></div>
-        <div class="showHumidity"></div>
-        <div class="showTemp"></div>
-        <div class="showLat"></div>
-        <div class="showLong"></div>
+        <input id="location" type="text" class="form-control">
+        <button class="btn btn-warning mt-3" id="weatherLocation">Get Current Temperature and Humidity</button>
+        <section class="mt-3" id="results">
+            <div class="showErrors"></div>
+            <div class="showHumidity"></div>
+            <div class="showTemp"></div>
+            <div class="showDescription"></div>
+            <div class="showLat"></div>
+            <div class="showLong"></div>
+            <div class="showWendSpeed"></div>
+            <div class="showClouds"></div>
+        </section>
     </div>
 </body>
 
