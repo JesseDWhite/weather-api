@@ -1,5 +1,5 @@
-# _{Application Name}_
-#### _{Brief description of application}_
+# _weather-api_
+#### _An api test for getting the local weather._
 #### By _Jesse White_
 ## Technologies Used
 * _HTML_ 📝
