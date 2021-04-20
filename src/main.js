@@ -2,26 +2,26 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-// import ShowWeatherConditions from './js/temp-conversion.js';
+import WeatherService from './js/weather-service.js'
+
+function clearFields() {
+    $('#location').val("");
+    $('.showErrors').text("");
+    $('.showHumidity').text("");
+    $('.showTemp').text("");
+    $('.showDescription').text("");
+    $('.showLat').text("");
+    $('.showLong').text("");
+    $('.showWindSpeed').text("");
+    $('.showClouds').text("");
+}
 
 $(document).ready(function () {
     $('#weatherLocation').click(function () {
         const city = $('#location').val();
         $('#location').val("");
-        let promise = new Promise(function (resolve, reject) {
-            let request = new XMLHttpRequest();
-            const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${process.env.API_KEY}`;
-
-            request.onload = function () {
-                if (this.status === 200) {
-                    resolve(request.response);
-                } else {
-                    reject(request.response);
-                }
-            }
-            request.open("GET", url, true);
-            request.send();
-        });
+        clearFields();
+        let promise = WeatherService.getWeather(city);
 
         promise.then(function (response) {
             const body = JSON.parse(response);
@@ -30,12 +30,10 @@ $(document).ready(function () {
             $('.showDescription').text(`${Date(response.dt)}`);
             $('.showLat').text(`Lat: ${response.coord.lat}.`);
             $('.showLong').text(`Long: ${response.coord.lon}.`);
-            $('.showWendSpeed').text(`Wind Speed: ${response.wind.speed}.`);
+            $('.showWindSpeed').text(`Wind Speed: ${response.wind.speed}.`);
             $('.showClouds').text(`Clouds: ${response.clouds.all}%.`);
         }, function (error) {
             $('.showErrors').text(`There was an error processing your request: ${error}`);
-            $('.showHumidity').text("");
-            $('.showTemp').text("");
         });
     });
 });
