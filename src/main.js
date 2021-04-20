@@ -8,21 +8,23 @@ $(document).ready(function () {
     $('#weatherLocation').click(function () {
         const city = $('#location').val();
         $('#location').val("");
+        let promise = new Promise(function (resolve, reject) {
+            let request = new XMLHttpRequest();
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${process.env.API_KEY}`;
 
-        let request = new XMLHttpRequest();
-        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${process.env.API_KEY}`;
-
-        request.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                const response = JSON.parse(this.responseText);
-                getElements(response);
+            request.onload = function () {
+                if (this.status === 200) {
+                    resolve(request.response);
+                } else {
+                    reject(request.response);
+                }
             }
-        };
+            request.open("GET", url, true);
+            request.send();
+        });
 
-        request.open("GET", url, true);
-        request.send();
-
-        function getElements(response) {
+        promise.then(function (response) {
+            const body = JSON.parse(response);
             $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
             $('.showTemp').text(`The temperature is ${Math.floor(response.main.temp)} degrees Fahrenheit.`);
             $('.showDescription').text(`${Date(response.dt)}`);
@@ -30,6 +32,10 @@ $(document).ready(function () {
             $('.showLong').text(`Long: ${response.coord.lon}.`);
             $('.showWendSpeed').text(`Wind Speed: ${response.wind.speed}.`);
             $('.showClouds').text(`Clouds: ${response.clouds.all}%.`);
-        }
+        }, function (error) {
+            $('.showErrors').text(`There was an error processing your request: ${error}`);
+            $('.showHumidity').text("");
+            $('.showTemp').text("");
+        });
     });
 });
